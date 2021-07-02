@@ -11,7 +11,7 @@ import UIKit
 
 struct SwiftUIViewTableCell: View {
     let text: String
-
+    
     var body: some View {
         HStack(alignment: .center, spacing: 10) {
             VStack(alignment: .leading, spacing: 4) {

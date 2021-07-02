@@ -9,25 +9,25 @@ import SwiftUI
 
 final class HostingTableViewCell<Content: View>: UITableViewCell {
     private let hostingController = UIHostingController<Content?>(rootView: nil)
-
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         hostingController.view.backgroundColor = .clear
     }
-
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     func set(rootView: Content, parentController: UIViewController) {
         self.hostingController.rootView = rootView
         self.hostingController.view.invalidateIntrinsicContentSize()
-
+        
         let requiresControllerMove = hostingController.parent != parentController
         if requiresControllerMove {
             parentController.addChild(hostingController)
         }
-
+        
         if !self.contentView.subviews.contains(hostingController.view) {
             self.contentView.addSubview(hostingController.view)
             hostingController.view.translatesAutoresizingMaskIntoConstraints = false
@@ -36,7 +36,7 @@ final class HostingTableViewCell<Content: View>: UITableViewCell {
             hostingController.view.topAnchor.constraint(equalTo: self.contentView.topAnchor).isActive = true
             hostingController.view.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor).isActive = true
         }
-
+        
         if requiresControllerMove {
             hostingController.didMove(toParent: parentController)
         }
